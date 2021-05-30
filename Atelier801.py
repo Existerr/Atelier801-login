@@ -80,7 +80,7 @@ class Atelier(Browser):
 if __name__ == '__main__':
     atelier = Atelier()
     atelier.get_tokens(url='login')
-    authentication = atelier.auth('identification', 'wen#6475', 'LnxxqTkvJ5RzNG7fUD4S6Li8SFBTSgidA1DEwC7FvjQ=')
+    authentication = atelier.auth('identification', 'youruser', 'yourencryptedpassword')
     if authentication["result"]:
         print(authentication["message"])
         page = atelier.get_page(url='index')
