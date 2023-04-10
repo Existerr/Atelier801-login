@@ -24,7 +24,7 @@ class Client(aiohttp.ClientSession):
             async with super().request(method, url, proxy=self.proxy, headers=headers, **kwargs) as response:
                 data = {
                     "text": await response.text(),
-                    "cookies": { key: cookie.value for key, cookie in response.cookies.items()}
+                    "cookies": { key: cookie.value for key, cookie in response.cookies.items() }
                 } if return_object else await response.json(content_type="text/html")
 
 
