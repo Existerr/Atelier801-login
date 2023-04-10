@@ -28,13 +28,16 @@ class Forum:
         
     async def login(self, username=None, password=None):
         self.client.cookie_jar.clear()
+        
+        self.id = username or self.id
+        self.password = password or self.password
 
         name, value, cookies = await self.fetch_login_tokens()
         
         data = {
             "rester_connecte": "on",
-            "id": username,
-            "pass": encrypt(password),
+            "id": self.id,
+            "pass": encrypt(self.password),
             "redirect": "https://atelier801.com/index",
             name: value
         }
