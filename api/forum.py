@@ -26,7 +26,7 @@ class Forum:
 
         return await self.fetch_login_tokens()
         
-    async def login(self, username, password):
+    async def login(self, username=None, password=None):
         self.client.cookie_jar.clear()
 
         name, value, cookies = await self.fetch_login_tokens()
