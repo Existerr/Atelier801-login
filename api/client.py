@@ -27,7 +27,6 @@ class Client(aiohttp.ClientSession):
                     "cookies": { key: cookie.value for key, cookie in response.cookies.items() }
                 } if return_object else await response.json(content_type="text/html")
 
-
         except Exception:
             data = None
 
