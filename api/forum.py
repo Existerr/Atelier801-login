@@ -49,7 +49,7 @@ class Forum:
         elif content.get("resultat") in self.negatives:
             return False
         else:
-            print(content.get("resultat"))
+            print(content.get("resultat", "request failed/unhandled response"))
             return await self.login(username, password)
         
 
