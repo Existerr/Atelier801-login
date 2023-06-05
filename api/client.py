@@ -1,8 +1,7 @@
-import aiohttp
-
+from aiohttp import ClientSession
 from random import choice
 
-class Client(aiohttp.ClientSession):
+class Client(ClientSession):
     
     def __init__(self, agents=None, proxy=None):
         super().__init__(headers={
