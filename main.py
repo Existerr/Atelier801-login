@@ -7,17 +7,11 @@ async def main():
         client = Client()
         forum = Forum(client)
 
-        print(f'connected:  {await forum.login("username", "password")}') #replace with your credentials
-
+        isconnected = await forum.login("username", "password") #replace with your credentials
+        print(f"connected: {isconnected}")
+        
     finally:
         await client.close()
 
 if __name__ == "__main__":
     asyncio.run(main())
-
-        
-
-        
-
-   
-
