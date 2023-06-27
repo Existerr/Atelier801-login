@@ -19,8 +19,10 @@ class Client(ClientSession):
         if self.agents:
             headers["User-Agent"] = choice(self.agents)
 
+        proxy = kwargs.pop("proxy", self.proxy)
+        
         try:
-            async with super().request(method, url, proxy=self.proxy, headers=headers, **kwargs) as response:
+            async with super().request(method, url, proxy=proxy, headers=headers, **kwargs) as response:
                 data = {
                     "text": await response.text(),
                     "cookies": { key: cookie.value for key, cookie in response.cookies.items() }
