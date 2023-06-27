@@ -53,7 +53,7 @@ class Forum:
             return True
             
         elif (account_state := content.get("resultat")).startswith(tuple(self.offline_states.keys())):
-            self.state = offline_states[account_state]
+            self.state = self.offline_states[account_state]
             return False
             
         else:
