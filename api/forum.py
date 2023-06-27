@@ -1,4 +1,4 @@
-from api.urls import INDEX_PAGE, IDENTIFICATION
+.urls import INDEX_PAGE, IDENTIFICATION
 
 from utils import regex, encrypt
 
