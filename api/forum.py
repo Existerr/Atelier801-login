@@ -1,5 +1,4 @@
-.urls import INDEX_PAGE, IDENTIFICATION
-
+from .urls import INDEX_PAGE, IDENTIFICATION
 from utils import regex, encrypt
 
 import asyncio
@@ -21,7 +20,6 @@ class Forum:
             "BANNIS": "banned",
             "ECHEC_AUTHENTIFICATION": "disconnected"      
         }
-
 
     async def fetch_login_tokens(self):
         while not (content := await self.client.request("GET", INDEX_PAGE, return_object=True)):
@@ -61,6 +59,3 @@ class Forum:
         else:
             print(content.get("resultat", f"request failed/unhandled response: {content}"))
             return await self.login(username, password)
-        
-
-        
