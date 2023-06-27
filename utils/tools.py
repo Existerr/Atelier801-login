@@ -8,7 +8,7 @@ SALT = bytes((
 ))
 
 def regex(pattern):
-    return re.compile(pattern)
+	return re.compile(pattern)
 
 def encrypt(string):
 	sha256 = hashlib.sha256(string.encode())
