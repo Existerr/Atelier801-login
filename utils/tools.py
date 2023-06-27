@@ -1,32 +1,19 @@
 import re
-import binascii
 import hashlib
 import base64
+
+SALT = bytes((
+	0xf7, 0x1a, 0xa6, 0xde, 0x8f, 0x17, 0x76, 0xa8, 0x03, 0x9d, 0x32, 0xb8, 0xa1, 0x56, 0xb2, 0xa9,
+	0x3e, 0xdd, 0x43, 0x9d, 0xc5, 0xdd, 0xce, 0x56, 0xd3, 0xb7, 0xa4, 0x05, 0x4a, 0x0d, 0x08, 0xb0
+))
 
 def regex(pattern):
     return re.compile(pattern)
 
-def encrypt(password):
-    CRYPT_VALUES = [-9, 25, -92, -37, -117, 18, 112, -95, -5, -108, 40, -83, -107, 73, -92, -102, 46, -52, 49, -118, -79, -56, -72, 63, -69, -98, -118, -22, 46, -16, -22, -111]
-    HEX_CHARS = "0123456789abcdef"
+def encrypt(string):
+	sha256 = hashlib.sha256(string.encode())
+	hex256 = sha256.hexdigest().encode()
+	hex256 += SALT
 
-    toHash_sha256 = hashlib.sha256(password.encode()).hexdigest()
-
-    ShaKikooBytes = []
-    for char in toHash_sha256:
-        ShaKikooBytes.append(ord(char))
-
-    for indice in range(0, len(CRYPT_VALUES)):
-        ShaKikooBytes.append(int(CRYPT_VALUES[indice] + indice))
-    
-    ShaKikooHex = ""
-    for byte in ShaKikooBytes:
-        firstId = (byte >> 4) & 15
-        secondId = byte & 15
-        ShaKikooHex = ShaKikooHex + HEX_CHARS[firstId] + HEX_CHARS[secondId]
-
-    ShaKikooHex_bin = binascii.unhexlify(ShaKikooHex)
-    ShaKikooHex_sha256_bin = hashlib.sha256(ShaKikooHex_bin).digest()
-    ShaKikooHex_sha256_b64 = base64.b64encode(ShaKikooHex_sha256_bin)
-
-    return ShaKikooHex_sha256_b64.decode()
+	hashed = hashlib.sha256(hex256).digest()
+	return base64.b64encode(hashed).decode()
