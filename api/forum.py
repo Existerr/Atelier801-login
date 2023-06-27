@@ -25,7 +25,7 @@ class Forum:
         while not (content := await self.client.request("GET", INDEX_PAGE, return_object=True)):
             await asyncio.sleep(1.0)
 
-        if text_vars := name_value.search(content["text"]):
+        if (text_vars := name_value.search(content["text"])):
             return text_vars.group(1), text_vars.group(2), content["cookies"]
 
         return await self.fetch_login_tokens()
