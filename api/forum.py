@@ -15,7 +15,13 @@ class Forum:
 
         self.credentials = f"{_id}:{password}"
 
-        self.negatives = ["ECHEC_AUTHENTIFICATION", "BANNIS"]
+        self.state = None
+
+        self.offline_states = {
+            "BANNIS": "banned",
+            "ECHEC_AUTHENTIFICATION": "disconnected"      
+        }
+
 
     async def fetch_login_tokens(self):
         while not (content := await self.client.request("GET", INDEX_PAGE, return_object=True)):
@@ -45,9 +51,13 @@ class Forum:
         content = await self.client.request("POST", IDENTIFICATION, data=data, headers={ "Referer": INDEX_PAGE }, cookies=cookies)
     
         if content.get("supprime"):
+            self.state = "connected"
             return True
-        elif content.get("resultat") in self.negatives:
+            
+        elif (account_state := content.get("resultat")).startswith(tuple(self.offline_states.keys())):
+            self.state = offline_states[account_state]
             return False
+            
         else:
             print(content.get("resultat", f"request failed/unhandled response: {content}"))
             return await self.login(username, password)
